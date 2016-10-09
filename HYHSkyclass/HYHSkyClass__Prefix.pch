@@ -1,0 +1,64 @@
+//
+//  HYHSkyClass__Prefix.pch
+//  HYHSkyclass
+//
+//  Created by yunhuihuang on 2016/10/8.
+//  Copyright © 2016年 yhhuang. All rights reserved.
+//
+
+#ifndef HYHSkyClass__Prefix_pch
+#define HYHSkyClass__Prefix_pch
+
+
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
+
+//#import "NSString+Utils.h"
+//#import "NSObject+KVOHelper.h"
+#import "UIFont+HYHFont.h"
+//#import "NSDate+SCFormat.h"
+#import <IQKeyboardManager.h>
+#import <UMengAnalytics/MobClick.h>
+//#import "MBProgressHUD+SCMB.h"
+
+#import "AppDelegate.h"
+//#import "EXTScope.h"
+
+//#import "common.h"
+
+#define ERROR_MSG(msg)                                                                            \
+[[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"错误", nil) message:msg delegate:nil      \
+cancelButtonTitle:nil otherButtonTitles:NSLocalizedString(@"知道了", nil), nil] show]   \
+
+#define rgb(r, g, b)         rgba(r, g, b, 1)
+#define rgba(r, g, b, a)     [UIColor colorWithRed:r / 255.f green:g / 255.f blue:b / 255.f alpha:a]
+#define kGlobalColorOrange    rgb(253, 155, 0)
+#define SafeString(x)        (x ? x : @"")
+
+#define kScreenHeight ([UIScreen mainScreen].bounds.size.height)
+#define kScreenWidth ([UIScreen mainScreen].bounds.size.width)
+
+#define appDelegate ((AppDelegate *)[UIApplication sharedApplication].delegate)
+
+
+#define LivePath(a, b, c) [NSString stringWithFormat:@"http://%@:8134/hls-live/%@/_definst_/%@/%@.m3u8", a, b, c, c]
+
+#define LiveClass(address) LivePath(@"202.117.16.190", @"livepkgr", address)
+
+#endif /* SkyClass_IOS_Prefix_pch */
+
+#ifdef __OBJC__
+
+#import <FrameAccessor.h>
+
+#endif
+
+#ifdef DEBUG
+#define CQLog(...) NSLog(__VA_ARGS__)
+#else
+#define CQLog(...)
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#endif /* HYHSkyClass__Prefix_pch */

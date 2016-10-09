@@ -7,6 +7,9 @@
 //
 
 #import "AppDelegate.h"
+#import "HYHAppFlow.h"
+#import "HYHRootViewController.h"
+#import "HYHLoginVC.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +20,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    self.window = [[UIWindow alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
+    [self.window makeKeyAndVisible];
+    
+    [HYHAppFlow showLoginViewController];
+    
     return YES;
 }
 
@@ -45,7 +53,7 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-    // Saves changes in the application's managed object context before the application terminates.
+    // Saves changes in the application's managed object contextbefore the application terminates.
     [self saveContext];
 }
 
@@ -54,6 +62,60 @@
 
 @synthesize persistentContainer = _persistentContainer;
 
+@synthesize managedObjectContext = _managedObjectContext;
+@synthesize managedObjectModel = _managedObjectModel;
+@synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
+
+- (NSURL *)applicationDocumentsDirectory{
+
+    return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+}
+
+- (NSManagedObjectModel *)managedObjectModel{
+
+    if (_managedObjectModel != nil) {
+        return _managedObjectModel;
+    }
+    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"HYHSkyclass "withExtension:@"momd"];
+    _managedObjectModel = [[NSManagedObjectModel alloc]initWithContentsOfURL:modelURL];
+    return _managedObjectModel;
+}
+
+- (NSPersistentStoreCoordinator *)persistentStoreCoordinator{
+
+    if (_persistentStoreCoordinator != nil) {
+        return _persistentStoreCoordinator;
+    }
+    _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc]initWithManagedObjectModel:[self managedObjectModel]];
+    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"HYHSkyclass.sqlite"];
+    NSError *error = nil;
+    NSString *failureReason = @"There was an error creating or loading the application's saved data.";
+    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        dict[NSLocalizedDescriptionKey] = @"Failed to initialize the application's saved data";
+        dict[NSLocalizedFailureReasonErrorKey] = failureReason;
+        dict[NSUnderlyingErrorKey] = error;
+        error = [NSError errorWithDomain:@"YOUR_ERROR_DOMAIN" code:9999 userInfo:dict];
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
+    return _persistentStoreCoordinator;
+}
+
+- (NSManagedObjectContext *)managedObjectContext{
+
+    if (_managedObjectContext != nil) {
+        return _managedObjectContext;
+    }
+    NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
+    if (!coordinator) {
+        return nil;
+    }
+    _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
+    [_managedObjectContext setPersistentStoreCoordinator:coordinator];
+    return _managedObjectContext;
+}
+/*
 - (NSPersistentContainer *)persistentContainer {
     // The persistent container for the application. This implementation creates and returns a container, having loaded the store for the application to it.
     @synchronized (self) {
@@ -72,6 +134,7 @@
                      * The store could not be migrated to the current model version.
                      Check the error message to determine what the actual problem was.
                     */
+/*
                     NSLog(@"Unresolved error %@, %@", error, error.userInfo);
                     abort();
                 }
@@ -81,7 +144,7 @@
     
     return _persistentContainer;
 }
-
+*/
 #pragma mark - Core Data Saving support
 
 - (void)saveContext {
@@ -94,5 +157,71 @@
         abort();
     }
 }
+#pragma mark IQKeyboardManager
+/** 设置键盘
+ enable控制整个功能是否启用。
+ 
+ shouldResignOnTouchOutside控制点击背景是否收起键盘。
+ 
+ shouldToolbarUsesTextFieldTintColor 控制键盘上的工具条文字颜色是否用户自定义。
+ 
+ enableAutoToolbar控制是否显示键盘上的工具条。
+ */
+-(void)configIQKey{
+    
+    IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
+    manager.enable = YES;
+    manager.shouldResignOnTouchOutside = YES;
+    manager.shouldToolbarUsesTextFieldTintColor = YES;
+    manager.enableAutoToolbar = NO;
+}
+
+- (void)configAppearance
+{
+    [UIApplication sharedApplication].statusBarHidden = YES;
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+    
+    UINavigationBar *navigationBar = [UINavigationBar appearance];
+    navigationBar.translucent = NO;
+    navigationBar.barTintColor = kGlobalColorOrange;
+    NSDictionary * textAttributes =[NSDictionary dictionaryWithObject:[UIFont hyhFontWithSize:17.f] forKey:NSFontAttributeName];
+    navigationBar.titleTextAttributes = textAttributes;
+    navigationBar.tintColor = rgba(0, 0, 0, .8);
+    
+    UIBarButtonItem *barbutton = [UIBarButtonItem appearance];
+    barbutton.tintColor = rgba(0, 0, 0,  .8);
+    [barbutton setTitleTextAttributes:@{ NSFontAttributeName:[UIFont hyhFontWithSize:17.f] } forState:UIControlStateNormal];
+    
+    UITabBar *tabBar = [UITabBar appearance];
+    tabBar.translucent = NO;
+    tabBar.tintColor = [UIColor blackColor];
+    
+    UITabBarItem *tabBarItem = [UITabBarItem appearance];
+    
+    [tabBarItem setTitleTextAttributes:@{ NSFontAttributeName:[UIFont hyhFontWithSize:14.f],
+                                          NSForegroundColorAttributeName:[UIColor blackColor] }
+                              forState:UIControlStateSelected];
+    
+    [tabBarItem setTitleTextAttributes:@{ NSFontAttributeName:[UIFont hyhFontWithSize:14.f],
+                                          NSForegroundColorAttributeName:[UIColor whiteColor] }
+                              forState:UIControlStateNormal];
+    
+}
+
+#pragma mark - Status bar touch tracking
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [super touchesBegan:touches withEvent:event];
+    CGPoint location = [[[event allTouches] anyObject] locationInView:[self window]];
+    CGRect statusBarFrame = [UIApplication sharedApplication].statusBarFrame;
+    if (CGRectContainsPoint(statusBarFrame, location)) {
+        //[self statusBarTouchedAction];
+    }
+}
+
+- (void)statusBarTouchedAction {
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"" object:nil];
+}
+
 
 @end
