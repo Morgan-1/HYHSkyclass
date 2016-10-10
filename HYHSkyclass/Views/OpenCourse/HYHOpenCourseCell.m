@@ -9,6 +9,7 @@
 #import "HYHOpenCourseCell.h"
 #import "UIImageView+WebCache.h"
 #import "Masonry.h"
+#import "HYHOpenCourse.h"
 @interface HYHOpenCourseCell ()
 
 @property(nonatomic, strong) UIView *baseView;
@@ -27,6 +28,32 @@
 @end
 
 @implementation HYHOpenCourseCell
+
+- (void)setOpenCourse:(HYHOpenCourse *)openCourse{
+    _openCourse = openCourse;
+    NSLog(@"--------------subViews : %@", self.contentView.subviews);
+    [self.contentView addSubview:self.baseView];
+    self.contentView.backgroundColor = [UIColor colorWithWhite:0.933 alpha:1.000];
+    
+    [_pictureView sd_setImageWithURL:[NSURL URLWithString:self.openCourse.pictureUrl] placeholderImage:[UIImage imageNamed:@"icon"]];
+    _pictureView.contentMode = UIViewContentModeScaleAspectFill;
+    
+    _titleLabel.text = openCourse.videoName;
+    _nameLabel.text = openCourse.authorName;
+    _timeLabel.text = [openCourse.createTime substringToIndex:[openCourse.createTime rangeOfString:@" "].location];
+    
+    if(openCourse.isWatched){
+        _titleLabel.textColor = [UIColor lightGrayColor];
+    }
+    else{
+        _titleLabel.textColor = [UIColor blackColor];
+    }
+    
+    
+    
+    [self addAutoLayoutToCell];
+}
+
 
 - (UIView *)baseView{
 

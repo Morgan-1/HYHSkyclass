@@ -107,6 +107,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="bgImageView" destination="rAe-cW-ZG8" id="sRH-7B-JfY"/>
                         <outlet property="password" destination="sBp-Xo-HVo" id="3TN-RQ-m6m"/>
                         <outlet property="userName" destination="GvO-a7-918" id="jgZ-xz-JlY"/>
                     </connections>

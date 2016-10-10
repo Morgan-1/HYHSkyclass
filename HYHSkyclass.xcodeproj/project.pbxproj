@@ -69,6 +69,9 @@
 		18FFDEBE1DAA6C3F00810340 /* HYHAccountTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 18FFDEBD1DAA6C3F00810340 /* HYHAccountTool.m */; };
 		18FFDEC11DAA6E1100810340 /* HYHDBTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 18FFDEC01DAA6E1100810340 /* HYHDBTool.m */; };
 		18FFDEC41DAA857300810340 /* HYHHttpTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 18FFDEC31DAA857300810340 /* HYHHttpTool.m */; };
+		18FFDECA1DAB718A00810340 /* NSString+HYHUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 18FFDEC91DAB718900810340 /* NSString+HYHUtils.m */; };
+		18FFDECD1DAB78B000810340 /* MBProgressHUD+HYHMB.m in Sources */ = {isa = PBXBuildFile; fileRef = 18FFDECC1DAB78B000810340 /* MBProgressHUD+HYHMB.m */; };
+		18FFDED01DAB912300810340 /* HYHOpenCourseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 18FFDECF1DAB912300810340 /* HYHOpenCourseManager.m */; };
 		5D6AA97A2BC3C8F062C05E30 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C3621AFAEEA25FB31603E0FA /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -214,6 +217,12 @@
 		18FFDEC01DAA6E1100810340 /* HYHDBTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYHDBTool.m; sourceTree = "<group>"; };
 		18FFDEC21DAA857300810340 /* HYHHttpTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYHHttpTool.h; sourceTree = "<group>"; };
 		18FFDEC31DAA857300810340 /* HYHHttpTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYHHttpTool.m; sourceTree = "<group>"; };
+		18FFDEC81DAB718900810340 /* NSString+HYHUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HYHUtils.h"; sourceTree = "<group>"; };
+		18FFDEC91DAB718900810340 /* NSString+HYHUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+HYHUtils.m"; sourceTree = "<group>"; };
+		18FFDECB1DAB78B000810340 /* MBProgressHUD+HYHMB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+HYHMB.h"; sourceTree = "<group>"; };
+		18FFDECC1DAB78B000810340 /* MBProgressHUD+HYHMB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+HYHMB.m"; sourceTree = "<group>"; };
+		18FFDECE1DAB912300810340 /* HYHOpenCourseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYHOpenCourseManager.h; sourceTree = "<group>"; };
+		18FFDECF1DAB912300810340 /* HYHOpenCourseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYHOpenCourseManager.m; sourceTree = "<group>"; };
 		7EB2CE662CBD0E2DE92B05AA /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		C3621AFAEEA25FB31603E0FA /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB6C61D3083389B3D5001FCA /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -389,6 +398,8 @@
 			children = (
 				18FFDEAF1DAA6A6300810340 /* HYHLoginManager.h */,
 				18FFDEB01DAA6A6300810340 /* HYHLoginManager.m */,
+				18FFDECE1DAB912300810340 /* HYHOpenCourseManager.h */,
+				18FFDECF1DAB912300810340 /* HYHOpenCourseManager.m */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -613,6 +624,10 @@
 				18FFDEB61DAA6C0D00810340 /* UIBarButtonItem+HYHExtension.m */,
 				18FFDEB71DAA6C0D00810340 /* UIFont+HYHFont.h */,
 				18FFDEB81DAA6C0D00810340 /* UIFont+HYHFont.m */,
+				18FFDEC81DAB718900810340 /* NSString+HYHUtils.h */,
+				18FFDEC91DAB718900810340 /* NSString+HYHUtils.m */,
+				18FFDECB1DAB78B000810340 /* MBProgressHUD+HYHMB.h */,
+				18FFDECC1DAB78B000810340 /* MBProgressHUD+HYHMB.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -841,8 +856,10 @@
 				18FFDEA81DAA514900810340 /* M3U8SegmentInfo.m in Sources */,
 				18FFDE6D1DA9337700810340 /* News+CoreDataClass.m in Sources */,
 				18FFDEBE1DAA6C3F00810340 /* HYHAccountTool.m in Sources */,
+				18FFDECA1DAB718A00810340 /* NSString+HYHUtils.m in Sources */,
 				18FFDE251DA8E83F00810340 /* HYHDemandCollectionVC.m in Sources */,
 				18FFDE431DA9201200810340 /* XRCarouselView.m in Sources */,
+				18FFDED01DAB912300810340 /* HYHOpenCourseManager.m in Sources */,
 				18FFDE851DA938FF00810340 /* HYHCourseInfo.m in Sources */,
 				18FFDE071DA895ED00810340 /* AppDelegate.m in Sources */,
 				18FFDE191DA8D99E00810340 /* HYHNavigationController.m in Sources */,
@@ -865,6 +882,7 @@
 				18FFDEB91DAA6C0D00810340 /* NSObject+HYHKVOHelper.m in Sources */,
 				18FFDE1F1DA8E7E200810340 /* HYHRootViewController.m in Sources */,
 				18FFDE751DA9337700810340 /* CourseSection+CoreDataClass.m in Sources */,
+				18FFDECD1DAB78B000810340 /* MBProgressHUD+HYHMB.m in Sources */,
 				18FFDEAA1DAA514900810340 /* NSString+m3u8.m in Sources */,
 				18FFDE8B1DA9392F00810340 /* HYHCourseItem.m in Sources */,
 				18FFDE8E1DA9393E00810340 /* HYHLive.m in Sources */,

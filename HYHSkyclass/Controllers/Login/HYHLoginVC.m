@@ -8,36 +8,77 @@
 
 #import "HYHLoginVC.h"
 #import "HYHAppFlow.h"
+#import "HYHLoginManager.h"
+#import "NSString+HYHUtils.h"
+#import "AFNetWorkReachabilityManager.h"
+#import "MBProgressHUD+HYHMB.h"
+
 @interface HYHLoginVC ()
 @property (weak, nonatomic) IBOutlet UITextField *userName;
 @property (weak, nonatomic) IBOutlet UITextField *password;
+@property (weak, nonatomic) IBOutlet UIImageView *bgImageView;
 
 @end
 
 @implementation HYHLoginVC
 - (IBAction)login:(id)sender {
-    [HYHAppFlow showMainViewController];
+    if (self.userName.text.length && self.password.text.length) {
+        BOOL networkReachable = [AFNetworkReachabilityManager sharedManager];
+        if (networkReachable) {
+            [MBProgressHUD showMessage:@"登录中....." toView:self.view];
+            __weak typeof (self) weakSelf = self;
+            [[HYHLoginManager manager] loginWithUserName:self.userName.text encyptedPassword:self.password.text success:^(BOOL status) {
+                [MBProgressHUD hideHUDForView:weakSelf.view];
+                if (status) {
+                    NSLog(@"登录成功");
+                    [MBProgressHUD showSuccess:@"登录成功"];
+                    [HYHAppFlow showMainViewController];
+                }else{
+                
+                    [MBProgressHUD showError:@"用户名或密码错误"];
+                    [weakSelf clearText];
+                }
+            } failure:^(NSError *error) {
+                [MBProgressHUD hideHUDForView:weakSelf.view];
+                [MBProgressHUD showError:@"登录错误"];
+                [weakSelf clearText];
+                NSLog(@"network error :%@",error);
+                
+            }];
+            
+        }else{
+        
+            [MBProgressHUD showError:@"请开启网络"];
+        }
+    }
+    else{
+        [MBProgressHUD showError:@"用户名或密码不能为空"];
+    }
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor redColor];
-    // Do any additional setup after loading the view.
+    
+    self.bgImageView.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(backgroundClick)];
+    [self.bgImageView addGestureRecognizer:tapGesture];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)backgroundClick{
+
+    [self.userName resignFirstResponder];
+    [self.password resignFirstResponder];
 }
 
-/*
-#pragma mark - Navigation
+- (void)clearText{
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    self.userName.text = nil;
+    self.password.text = nil;
 }
-*/
 
+
+- (void)showAlertMessage:(NSString *)message{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示信息" message:message delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    [alert show];
+}
 @end

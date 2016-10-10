@@ -10,7 +10,7 @@
 #import "HYHAppFlow.h"
 #import "HYHRootViewController.h"
 #import "HYHLoginVC.h"
-
+#import "HYHLoginManager.h"
 @interface AppDelegate ()
 
 @end
@@ -20,10 +20,18 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    [self configIQKey];
     self.window = [[UIWindow alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
     [self.window makeKeyAndVisible];
     
-    [HYHAppFlow showLoginViewController];
+    if ([[HYHLoginManager manager] isLogin]) {
+        NSLog(@"进入Main");
+        [HYHAppFlow showMainViewController];
+    }else{
+    
+        NSLog(@"进入登录页面");
+        [HYHAppFlow showLoginViewController];
+    }
     
     return YES;
 }
@@ -76,7 +84,7 @@
     if (_managedObjectModel != nil) {
         return _managedObjectModel;
     }
-    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"HYHSkyclass "withExtension:@"momd"];
+    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"HYHSkyclass"withExtension:@"momd"];
     _managedObjectModel = [[NSManagedObjectModel alloc]initWithContentsOfURL:modelURL];
     return _managedObjectModel;
 }

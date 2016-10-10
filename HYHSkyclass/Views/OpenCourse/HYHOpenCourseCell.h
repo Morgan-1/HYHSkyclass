@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class HYHOpenCourse;
 @interface HYHOpenCourseCell : UITableViewCell
+@property(nonatomic, strong) HYHOpenCourse *openCourse;
 
 @end
